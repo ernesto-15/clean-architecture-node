@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const movieApi = require('./routes/movie');
 const { config } = require('./config/index');
 const {
@@ -10,6 +11,9 @@ const {
 const notFoundHandler = require('./utils/middlewares/notFoundHandler');
 
 const app = express();
+
+//cors
+app.use(cors())
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
