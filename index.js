@@ -1,22 +1,30 @@
 const express = require('express');
-const bodyParser = require('body-parser')
-const movieApi = require('./routes/movie')  
+const bodyParser = require('body-parser');
+const movieApi = require('./routes/movie');
 const { config } = require('./config/index');
-const {logError, errorHandler} = require('./utils/middlewares/errorHandler')
+const {
+  logError,
+  errorHandler,
+  wrapError,
+} = require('./utils/middlewares/errorHandler');
+const notFoundHandler = require('./utils/middlewares/notFoundHandler');
 
 const app = express();
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
- 
+app.use(bodyParser.urlencoded({ extended: false }));
+
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
+//Route
+movieApi(app);
 
-movieApi(app)
+//Catch 404 error
+app.use(notFoundHandler);
 
-//log errors
-app.use(logError,errorHandler)
+//log errors - Middleware
+app.use(logError, wrapError, errorHandler);
 // app.use(errorHandler)
 
 app.listen(config.port, (err) => {
