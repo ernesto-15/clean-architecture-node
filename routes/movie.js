@@ -21,7 +21,7 @@ const moviesApi = (app) => {
 
   movieRouter.get('/', async (req, res, next) => {
     try {
-      cacheResponse(res, FIVE_MINUTES_IN_SECONDS)
+      cacheResponse(res, FIVE_MINUTES_IN_SECONDS);
       const { tags } = req.query;
       const movies = await moviesService.getMovies({ tags });
       res.status(200).json({
@@ -39,7 +39,7 @@ const moviesApi = (app) => {
     validationHandler(movieIdSchema, 'params'),
     async (req, res, next) => {
       try {
-        cacheResponse(res, SIXTY_MINUTES_IN_SECONDS)
+        cacheResponse(res, SIXTY_MINUTES_IN_SECONDS);
         const id = req.params.id;
         const movie = await moviesService.getMovie({ id });
         if (Object.keys(movie).length === 0) {

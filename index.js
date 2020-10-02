@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const movieApi = require('./routes/movie');
+const userMovieApi = require('./routes/userMovie');
 const { config } = require('./config/index');
 const {
   logError,
@@ -23,6 +24,7 @@ app.use(bodyParser.json());
 
 //Route
 movieApi(app);
+userMovieApi(app)
 
 //Catch 404 error
 app.use(notFoundHandler);
