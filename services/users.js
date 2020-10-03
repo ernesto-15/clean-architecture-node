@@ -13,10 +13,11 @@ class UserService {
   }
 
   async createUser({ user }) {
-    const { name, email, password } = await this.mongoDB.create(
-      this.collection,
-      user
-    );
+    const { name, email, password } = user;
+    const userExists = this.verifyUserExists({ email });
+    if(userExists) {
+      throw new Error('User already exists')
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
     const createdUser = await this.mongoDB.create(this.collection, {
       name,
@@ -25,7 +26,11 @@ class UserService {
     });
     return createdUser;
   }
+
+  async verifyUserExists({ email }) {
+    const [user] = await this.mongoDB.getAll(this.collection, { email });
+    return user;
+  }
 }
 
 module.exports = UserService;
-

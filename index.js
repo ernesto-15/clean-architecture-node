@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const movieApi = require('./routes/movie');
 const userMovieApi = require('./routes/userMovie');
+const authApi = require('./routes/auth');
 const { config } = require('./config/index');
 const {
   logError,
@@ -14,7 +15,7 @@ const notFoundHandler = require('./utils/middlewares/notFoundHandler');
 const app = express();
 
 //cors
-app.use(cors())
+app.use(cors());
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -24,7 +25,8 @@ app.use(bodyParser.json());
 
 //Route
 movieApi(app);
-userMovieApi(app)
+userMovieApi(app);
+authApi(app);
 
 //Catch 404 error
 app.use(notFoundHandler);
