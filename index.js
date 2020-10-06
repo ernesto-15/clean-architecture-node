@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const helmet = require('helmet');
 const movieApi = require('./routes/movie');
 const userMovieApi = require('./routes/userMovie');
 const authApi = require('./routes/auth');
@@ -22,6 +23,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
+
+//helmet
+app.use(helmet());
 
 //Route
 movieApi(app);
